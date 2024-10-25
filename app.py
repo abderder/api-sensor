@@ -14,7 +14,7 @@ store_dict = create_app()
 
 app = FastAPI()
 
-@app.get("/vimderder")
+@app.get("/")
 
 def visit(
         store_name: str, year: int, month: int, day: int, sensor_id: int | None = None
@@ -35,7 +35,10 @@ def visit(
     if sensor_id is None:
         visit_count = store_dict[store_name].get_all_traffic(request_date)
     else:
-        visit_count = store_dict[store_name].get_sensor_traffic(sensor_id, request_date )
+        if sensor_id > 7 or sensor_id < 1:
+            return JSONResponse(status_code=404, content={"message": "no data"})
+        else:
+            visit_count = store_dict[store_name].get_sensor_traffic(sensor_id, request_date )
     if visit_count < 0:
         return JSONResponse(status_code=404, content={"message": "store was closed"})
     return JSONResponse(status_code=200, content=visit_count)
