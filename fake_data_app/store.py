@@ -23,7 +23,7 @@ class StoreSensor:
         traffic_percentage = [0.48, 0.30, 0.05, 0.03, 0.01, 0.02, 0.10, 0.01]
         np.random.shuffle(traffic_percentage)
         for i in range(8):
-            sensor = Visitsensor(
+            sensor = VisitSensor(
                 traffic_percentage[i]*avg_visit,
                 traffic_percentage[i]*std_visit,
                 perc_malfunction,
